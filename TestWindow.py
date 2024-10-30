@@ -9,8 +9,10 @@ from db import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
 
 
 class TestWindow(QWidget):
-    def __init__(self):
+    def __init__(self, theme):
         super().__init__()
+
+        self.theme = theme  # Сохраняем выбранную тему
 
         self.init_ui()
         self.init_question_manager()
@@ -67,11 +69,15 @@ class TestWindow(QWidget):
         self.timer.timeout.connect(self.update_time)
         self.timer.start(1000)  # Update time every second
 
+    # def fetch_all_questions(self):
+    #     self.available_questions = self.question_manager.get_all_questions()
+    #     random.shuffle(self.available_questions)
+    #     print('fetch 1')
+    #     print(self.available_questions)
+
     def fetch_all_questions(self):
-        self.available_questions = self.question_manager.get_all_questions()
+        self.available_questions = self.question_manager.get_questions_by_theme(self.theme)
         random.shuffle(self.available_questions)
-        print('fetch 1')
-        print(self.available_questions)
 
     def load_question(self):
         try:

@@ -66,3 +66,10 @@ class QuestionManager(QObject):
 
         question, answer, options = result
         return Question(question, int(answer) - 1, options.split(','))
+
+    def get_questions_by_theme(self, theme):
+        self.cur.execute(
+            "SELECT * FROM questions WHERE theme=%s ORDER BY RANDOM()",
+            (theme,)
+        )
+        return [Question(row[3], row[5], row[4], row[2]) for row in self.cur.fetchall()]
