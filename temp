@@ -402,3 +402,29 @@ class TestWindow(QWidget):
             f"Your score: {self.score}\nTotal questions: {self.score}",
         )
         self.close()
+
+
+
+
+courses = {
+            "Курс по Авто": {
+                "Раздел 1: Основы": {
+                    "video": "https://youtu.be/EnYL0BQUSU8?si=cB4KT6Gad0jD76YX",
+                    "article": "https://zeekr-avto.ru/blog/zeekr-mix-innovacionnyj-elektricheskij-krossven-gotov-k-vyhodu-na-rynok",
+                },
+                "Раздел 2: Углубленное изучение": {
+                    "video": "https://youtu.be/awGckl8pXQw?si=nv1oe5nviYT6jIyC",
+                    "article": "https://www.autonews.ru/news/6177c0e89a79470b5d5211b8",
+                },
+            },
+            "Курс по ИИ": {
+                "Раздел 1: Основы ИИ": {
+                    "video": "https://www.youtube.com/watch?v=tDyDWVqBw5s&t=40s&pp=ygUR0LjQuCDQvtGB0L3QvtCy0Ys%3D",
+                    "article": "https://www.cnews.ru/book/%D0%98%D1%81%D0%BA%D1%83%D1%81%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B8%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82_-_%D0%98%D0%98_-_Artificial_intelligence_-_AI_-_Artificial_General_Intelligence_-_AGI",
+                },
+                "Раздел 2: Модели и алгоритмы": {
+                    "video": "https://www.youtube.com/watch?v=9V7RbQ4XQmI&list=PL4_hYwCyhAvYJ1r22vWqp_sDwJMNf64MN",
+                    "article": "https://lanbook.com/catalog/informatika/kompyuternaya-grafika-modeli-i-algoritmy/",
+                },
+            },
+        }

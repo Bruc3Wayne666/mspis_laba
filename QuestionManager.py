@@ -24,32 +24,28 @@ class QuestionManager(QObject):
     def get_all_questions(self):
         self.cur.execute("SELECT * FROM questions ORDER BY RANDOM()")
         c = self.cur.fetchall()
-        # print(c)
-        # # print([row for row in c])
-        # for row in c:
-        #     print(*row, sep='|')
-        # return [Question(*row) for row in self.cur.fetchall()]
-        # print([row[3] for row in c])
         return [Question(row[3], row[5], row[4], row[2]) for row in c]
 
-    def insert_test_results(self, username, test_time, score):
-        self.cur.execute(
-            "INSERT INTO test_results (username, test_time, score) VALUES (%s, %s, %s)",
-            (username, test_time, score),
-        )
-        self.conn.commit()
-
-    # def get_random_question(self, aspects, difficulty):
-    #     difficulty = str(difficulty)
-    #     aspect = random.choice(aspects)
-    #
+    # def insert_test_results(self, username, test_time, score):
     #     self.cur.execute(
-    #         "SELECT question, answer, options FROM questions WHERE aspect=%s AND difficulty=%s ORDER BY RANDOM() LIMIT 1",
-    #         (aspect, difficulty),
+    #         "INSERT INTO test_results (username, test_time, score) VALUES (%s, %s, %s)",
+    #         (username, test_time, score),
     #     )
-    #     question, answer, options = self.cur.fetchone()
-    #     # return Question(question, answer, options.split('|'))
-    #     return Question(question, answer, options.split(','))
+    #     self.conn.commit()
+
+    def insert_test_results(self, user_id, score, theme):
+        query = "INSERT INTO results (user_id, score, theme) VALUES (%s, %s, %s)"
+        self.cur.execute(query, (user_id, score, theme))
+        print('------')
+        self.conn.commit()
+        # with self.conn.cursor() as cursor:
+        #     query = """
+        #         INSERT INTO results (user_id, score, theme)
+        #         VALUES (%s, %s, %s)
+        #     """
+        #     cursor.execute(query, (user_id, score, theme))
+        #     print('after save')
+        #     self.conn.commit()
 
     def get_random_question(self, aspects, difficulty):
         difficulty = str(difficulty)

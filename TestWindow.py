@@ -9,10 +9,12 @@ from db import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
 
 
 class TestWindow(QWidget):
-    def __init__(self, theme):
+    def __init__(self, theme, user_id):
         super().__init__()
 
         self.theme = theme  # Сохраняем выбранную тему
+
+        self.user_id = user_id
 
         self.init_ui()
         self.init_question_manager()
@@ -92,7 +94,6 @@ class TestWindow(QWidget):
 
             self.question = self.available_questions.pop(0)
 
-
             if self.question is None:
                 raise ValueError("No more questions left")
 
@@ -157,10 +158,13 @@ class TestWindow(QWidget):
             message,
         )
 
-        # Insert test results into the database
-        self.question_manager.insert_test_results(self.username, self.time_left, self.correct_answers)
+        print('before save')
+        self.question_manager.insert_test_results(self.user_id, self.score, self.theme)
 
-        # Return to the home screen
-        # self.close()
-        # self.home_window = HomeWindow()
-        self.home_window.show(username=self.username)
+        from HomeWindow import HomeWindow
+
+        self.home_window = HomeWindow(user_id=self.user_id)
+        self.home_window.show()
+
+        self.close()
+
