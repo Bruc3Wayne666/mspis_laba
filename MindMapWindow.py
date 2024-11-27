@@ -4,12 +4,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
-from db import DB_HOST, DB_PASSWORD, DB_USER, DB_NAME
+from db import DB_HOST, DB_PASSWORD, DB_USER, DB_NAME, cur, DB_PORT
 
 
 class MindMapWindow(QMainWindow):
     def __init__(self, user_id):
         super().__init__()
+        self.home_screen = None
         self.setWindowTitle("Интеллект-карта")
         self.setGeometry(100, 100, 800, 600)
 
@@ -36,13 +37,29 @@ class MindMapWindow(QMainWindow):
         container.setLayout(layout)
         self.setCentralWidget(container)
 
+        self.user_id = user_id
+
         # Отображаем интеллект-карту и гистограмму на основе user_id
         self.plot_mind_map(user_id)
+
+        self.conn = psycopg2.connect(
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT
+        )
+        self.cur = self.conn.cursor()
+
+
 
     def go_back(self):
         from HomeWindow import HomeWindow
 
-        self.home_screen = HomeWindow()
+        self.cur.execute("SELECT * FROM users WHERE id=%s;", (self.user_id,))
+        user = self.cur.fetchone()
+
+        self.home_screen = HomeWindow(user)
         self.home_screen.show()
         self.close()
 

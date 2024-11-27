@@ -13,6 +13,7 @@ class LoginDialog(QDialog):
 
         # self.home_window = HomeWindow()
 
+        self.home_window = None
         self.setWindowTitle("Вход/Регистрация")
 
         self.username_label = QLabel("Имя пользователя:")
@@ -26,7 +27,7 @@ class LoginDialog(QDialog):
         self.login_button.clicked.connect(self.login)
 
         self.register_button = QPushButton("Зарегистрироваться")
-        # self.register_button.clicked.connect(self.register)
+        self.register_button.clicked.connect(self.register)
 
         layout = QVBoxLayout()
         layout.addWidget(self.username_label)
@@ -55,7 +56,7 @@ class LoginDialog(QDialog):
         user = self.cur.fetchone()
 
         if user:
-            self.home_window = HomeWindow(user[0])
+            self.home_window = HomeWindow(user)
 
             QMessageBox.information(self, "Успех", "Вы успешно вошли в систему.")
             self.home_window.show()
@@ -63,17 +64,22 @@ class LoginDialog(QDialog):
         else:
             QMessageBox.warning(self, "Ошибка", "Неверное имя пользователя или пароль.")
 
-    # def register(self):
-    #     username = self.username_input.text()
-    #     password = hashlib.sha256(self.password_input.text().encode()).hexdigest()
-    #
-    #     self.cur.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s)", (username, password))
-    #     self.conn.commit()
-    #
-    #     QMessageBox.information(self, "Успех", "Вы успешно зарегистрировались.")
-    #
-    #     self.home_window.show()
-    #     self.close()
+    def register(self):
+        username = self.username_input.text()
+        password = hashlib.sha256(self.password_input.text().encode()).hexdigest()
+
+        self.cur.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s)", (username, password))
+        self.conn.commit()
+
+        self.cur.execute("SELECT * FROM users WHERE username=%s AND password_hash=%s", (username, password))
+        user = self.cur.fetchone()
+
+        QMessageBox.information(self, "Успех", "Вы успешно зарегистрировались.")
+
+        self.home_window = HomeWindow(user)
+
+        self.home_window.show()
+        self.close()
 
     def closeEvent(self, event):
         self.cur.close()

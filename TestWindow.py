@@ -64,6 +64,8 @@ class TestWindow(QWidget):
             host=DB_HOST,
             port=DB_PORT
         )
+
+        self.cur = conn.cursor()
         self.question_manager = QuestionManager(conn)
 
     def start_timer(self):
@@ -163,7 +165,10 @@ class TestWindow(QWidget):
 
         from HomeWindow import HomeWindow
 
-        self.home_window = HomeWindow(user_id=self.user_id)
+        self.cur.execute("SELECT * FROM users WHERE id=%s;", (self.user_id,))
+        user = self.cur.fetchone()
+
+        self.home_window = HomeWindow(user)
         self.home_window.show()
 
         self.close()

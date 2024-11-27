@@ -3,15 +3,17 @@ from PyQt5.QtWidgets import QLabel, QPushButton, QVBoxLayout, QWidget
 from CoursesWindow import CoursesWindow
 from MindMapWindow import MindMapWindow
 from TestWindow import TestWindow
+from db import cur
 
 
 class HomeWindow(QWidget):
-    def __init__(self, user_id):
+    def __init__(self, user):
         super().__init__()
 
         self.courses_window = None
         self.mind_map_window = None
-        self.user_id = user_id
+        self.user_id = user[0]
+        self.username = user[1]
 
         self.test_window = None
         self.setWindowTitle("Home")
@@ -31,6 +33,8 @@ class HomeWindow(QWidget):
         self.mind_map_button.clicked.connect(self.open_mind_map)
         self.courses_button.clicked.connect(self.open_courses)
 
+        self.label = QLabel(f"Добро пожаловать, {self.username} (ID: {self.user_id})!")
+
         layout = QVBoxLayout()
         layout.addWidget(self.label)
         # layout.addWidget(self.test_button)
@@ -40,6 +44,7 @@ class HomeWindow(QWidget):
         layout.addWidget(self.courses_button)
 
         self.setLayout(layout)
+
 
     def start_test(self, theme):
         self.test_window = TestWindow(theme, user_id=self.user_id)
