@@ -27,9 +27,11 @@ class HomeWindow(QWidget):
         self.mind_map_button = QPushButton("Перейти к интеллект-карте")
         self.theme1_button = QPushButton("Тест по теме Авто")
         self.theme2_button = QPushButton("Тест по теме ИИ")
+        self.theme3_button = QPushButton("Тест по теме МСПИС")
 
         self.theme1_button.clicked.connect(lambda: self.start_test("cars"))
         self.theme2_button.clicked.connect(lambda: self.start_test("AI"))
+        self.theme3_button.clicked.connect(lambda: self.start_test("mspis"))
         self.mind_map_button.clicked.connect(self.open_mind_map)
         self.courses_button.clicked.connect(self.open_courses)
 
@@ -41,6 +43,7 @@ class HomeWindow(QWidget):
         layout.addWidget(self.mind_map_button)
         layout.addWidget(self.theme1_button)
         layout.addWidget(self.theme2_button)
+        layout.addWidget(self.theme3_button)
         layout.addWidget(self.courses_button)
 
         self.setLayout(layout)
