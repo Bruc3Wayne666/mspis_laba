@@ -60,6 +60,20 @@ class CoursesWindow(QWidget):
                     "article": "https://lanbook.com/catalog/informatika/kompyuternaya-grafika-modeli-i-algoritmy/",
                 },
             },
+            "Курс по МСПИС": {
+                "Раздел 1: Введение в МСПИС": {
+                    "video": "https://www.example.com/video1",  # Замените на реальную ссылку
+                    "article": "https://www.example.com/article1",  # Замените на реальную ссылку
+                },
+                "Раздел 2: Основы моделирования": {
+                    "video": "https://www.example.com/video2",  # Замените на реальную ссылку
+                    "article": "https://www.example.com/article2",  # Замените на реальную ссылку
+                },
+                "Раздел 3: Программирование и системы": {
+                    "video": "https://www.example.com/video3",  # Замените на реальную ссылку
+                    "article": "https://www.example.com/article3",  # Замените на реальную ссылку
+                },
+            },
         }
 
         for course, sections in courses.items():

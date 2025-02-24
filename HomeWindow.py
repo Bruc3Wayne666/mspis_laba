@@ -17,11 +17,9 @@ class HomeWindow(QWidget):
 
         self.test_window = None
         self.setWindowTitle("Home")
-        self.resize(300, 200)
+        self.resize(300, 300)
 
-        self.label = QLabel("Добро пожаловать!")
-        # self.test_button = QPushButton("Пройти тестирование")
-        # self.test_button.clicked.connect(self.start_test)
+        self.label = QLabel(f"Добро пожаловать, {self.username} (ID: {self.user_id})!")
 
         self.courses_button = QPushButton("Курсы")
         self.mind_map_button = QPushButton("Перейти к интеллект-карте")
@@ -35,11 +33,8 @@ class HomeWindow(QWidget):
         self.mind_map_button.clicked.connect(self.open_mind_map)
         self.courses_button.clicked.connect(self.open_courses)
 
-        self.label = QLabel(f"Добро пожаловать, {self.username} (ID: {self.user_id})!")
-
         layout = QVBoxLayout()
         layout.addWidget(self.label)
-        # layout.addWidget(self.test_button)
         layout.addWidget(self.mind_map_button)
         layout.addWidget(self.theme1_button)
         layout.addWidget(self.theme2_button)
@@ -47,6 +42,31 @@ class HomeWindow(QWidget):
         layout.addWidget(self.courses_button)
 
         self.setLayout(layout)
+
+        # Добавление стилей
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #f0f0f0;  /* Цвет фона */
+                font-family: Arial, sans-serif;  /* Шрифт */
+            }
+            QLabel {
+                font-size: 18px;  /* Размер шрифта для меток */
+                color: #333;  /* Цвет текста */
+                margin-bottom: 20px;  /* Отступ снизу */
+            }
+            QPushButton {
+                background-color: #4CAF50;  /* Зеленый цвет кнопок */
+                color: white;  /* Цвет текста кнопок */
+                border: none;  /* Без рамки */
+                padding: 10px;  /* Отступ внутри кнопок */
+                font-size: 16px;  /* Размер шрифта кнопок */
+                border-radius: 5px;  /* Закругленные углы */
+                margin: 5px;  /* Отступ между кнопками */
+            }
+            QPushButton:hover {
+                background-color: #45a049;  /* Цвет кнопки при наведении */
+            }
+        """)
 
 
     def start_test(self, theme):
